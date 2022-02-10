@@ -60,3 +60,25 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       artifact: drop
 
+- stage: Test
+  displayName: Test Stage
+  
+  jobs:
+  - job: Run_Tests
+    displayName: Run Tests
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - script: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-azurepipelines
+          pip install -e .
+        displayName: Install Dependencies
+        
+      - script: |
+          python -m pytest tests/
+        displayName: 'pytest'
+    
+  
+  
+
