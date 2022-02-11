@@ -50,7 +50,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         fileText = json.loads(plansTasksRequest.text)
         writeFiletoADLS(fileText, groupDisplayName, planDisplayName)
 
-    return func.HttpResponse(f"Hello, {groupId}. This HTTP triggered function executed successfully.")
+    return func.HttpResponse(f"Hello, The Group {groupDisplayName}'s planner data has been added to ADLS ")
 
 
 def writeFiletoADLS(jsonText, groupName, planName):
