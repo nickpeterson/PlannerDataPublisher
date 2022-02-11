@@ -33,7 +33,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         f"https://login.microsoftonline.com/{os.getenv('TenantId')}/oauth2/token", headers=tokenHeaders, data=tokenBody)
     accessTokenResponse = accessTokenRequest.json()
     token = accessTokenResponse['access_token']
-    logging.info(token)
     graphHeader = {'Authorization': f"Bearer {token}"}
     groupNameRequest = requests.get(
         f"https://graph.microsoft.com/v1.0/groups/{groupId}", headers=graphHeader)
