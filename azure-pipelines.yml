@@ -5,14 +5,9 @@
 
 trigger:
 - development
+- main
 
 variables:
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'cedde2df-bfb0-4a40-a989-2c5e3d76a32a'
-
-  # Function app name
-  functionAppName: 'luckGraphDataPublisher-dev-eus2-func'
-
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -82,27 +77,3 @@ stages:
 
 
 
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Test
-  condition: succeeded()
-
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    environment: 'development'
-    pool:
-      vmImage: $(vmImageName)
-
-    strategy:
-      runOnce:
-        deploy:
-
-          steps:
-          - task: AzureFunctionApp@1
-            displayName: 'Azure functions app deploy'
-            inputs:
-              azureSubscription: '$(azureSubscription)'
-              appType: functionAppLinux
-              appName: $(functionAppName)
-              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
